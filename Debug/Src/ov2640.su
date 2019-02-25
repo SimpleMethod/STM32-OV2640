@@ -1,0 +1,7 @@
+ov2640.c:195:6:sccb_write	24	static
+ov2640.c:208:6:sccb_read	32	static
+ov2640.c:170:6:load_config	32	static
+ov2640.c:136:6:ov2640_conf	8	static
+ov2640.c:225:6:ov2640_stop_dcmi	8	static
+ov2640.c:109:6:ov2640_init	8	static
+ov2640.c:230:6:ov2640_capture_snapshot	16	static

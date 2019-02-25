@@ -1,0 +1,8 @@
+main.c:119:6:vprint	208	static
+main.c:127:6:my_printf	16	static
+main.c:203:6:SystemClock_Config	232	static
+main.c:140:5:main	88	static
+main.c:480:6:HAL_DCMI_FrameEventCallback	8	static
+main.c:485:6:HAL_DCMI_LineEventCallback	0	static
+main.c:490:6:HAL_DCMI_ErrorCallback	0	static
+main.c:500:6:Error_Handler	0	static
