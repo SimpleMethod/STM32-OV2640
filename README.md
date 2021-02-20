@@ -6,7 +6,9 @@
 ## Support for resolutions  such as:
  -  160X120px,
 -   320X240px,
+  
 Experimental use:
+
 -   640X480px,
 -  800x600px,
 -  1024x768px,
