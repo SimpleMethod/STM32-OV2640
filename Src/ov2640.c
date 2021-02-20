@@ -1,9 +1,10 @@
-/*
+/**
  * ov2640.c
  *
- *  Created on: 23.02.2019
+ * 	Created on: 23.02.2019
+ *	Modified on:  23.02.2021
  *
- * Copyright 2019 SimpleMethod
+ *	Copyright 2021 SimpleMethod
  *
  *Permission is hereby granted, free of charge, to any person obtaining a copy of
  *this software and associated documentation files (the "Software"), to deal in
@@ -27,8 +28,10 @@
 
 #include "ov2640.h"
 
+/**
+ * Code debugging option
+ */
 //#define DEBUG
-
 
 I2C_HandleTypeDef *phi2c;
 DCMI_HandleTypeDef *phdcmi;
@@ -91,11 +94,17 @@ const unsigned char OV2640_JPEG[][2] = { { 0xe0, 0x14 }, { 0xe1, 0x77 }, { 0xe5,
 		0x1f }, { 0xd7, 0x03 }, { 0xda, 0x10 }, { 0xe0, 0x00 }, { 0xFF, 0x01 },
 		{ 0x04, 0x08 }, { 0xff, 0xff }, };
 
-const unsigned char OV2640_160x120_JPEG[][2] = { { 0xe0, 0x14 }, { 0xe1, 0x77 },
-		{ 0xe5, 0x1f }, { 0xd7, 0x03 }, { 0xda, 0x10 }, { 0xe0, 0x00 }, { 0xFF,
-				0x01 }, { 0x04, 0x08 },
-		//{ 0x12, 0x02 }, //Enable Color Bar Test Pattern
-		{ 0xff, 0xff }, };
+const unsigned char OV2640_160x120_JPEG[][2] = { { 0xFF, 0x01 }, { 0x12, 0x40 },
+		{ 0x17, 0x11 }, { 0x18, 0x43 }, { 0x19, 0x00 }, { 0x1a, 0x4b }, { 0x32,
+				0x09 }, { 0x4f, 0xca }, { 0x50, 0xa8 }, { 0x5a, 0x23 }, { 0x6d,
+				0x00 }, { 0x39, 0x12 }, { 0x35, 0xda }, { 0x22, 0x1a }, { 0x37,
+				0xc3 }, { 0x23, 0x00 }, { 0x34, 0xc0 }, { 0x36, 0x1a }, { 0x06,
+				0x88 }, { 0x07, 0xc0 }, { 0x0d, 0x87 }, { 0x0e, 0x41 }, { 0x4c,
+				0x00 }, { 0xFF, 0x00 }, { 0xe0, 0x04 }, { 0xc0, 0x64 }, { 0xc1,
+				0x4b }, { 0x86, 0x35 }, { 0x50, 0x92 }, { 0x51, 0xc8 }, { 0x52,
+				0x96 }, { 0x53, 0x00 }, { 0x54, 0x00 }, { 0x55, 0x00 }, { 0x57,
+				0x00 }, { 0x5a, 0x2c }, { 0x5b, 0x24 }, { 0x5c, 0x00 }, { 0xe0,
+				0x00 }, { 0xff, 0xff } };
 
 const unsigned char OV2640_320x240_JPEG[][2] = { { 0xff, 0x01 }, { 0x12, 0x40 },
 		{ 0x17, 0x11 }, { 0x18, 0x43 }, { 0x19, 0x00 }, { 0x1a, 0x4b }, { 0x32,
@@ -121,12 +130,156 @@ const unsigned char OV2640_640x480_JPEG[][2] = { { 0xff, 0x01 }, { 0x11, 0x01 },
 				0x00 }, { 0x5a, 0xa0 }, { 0x5b, 0x78 }, { 0x5c, 0x00 }, { 0xd3,
 				0x04 }, { 0xe0, 0x00 }, { 0xff, 0xff }, };
 
-const unsigned char OV2640_Contrast[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
-		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x28 }, { 0x7d,
-		0x0c }, { 0x7d, 0x06 }, { 0xff, 0x00 }, { 0x7c, 0x00 }, { 0x7d, 0x04 },
-		{ 0x7c, 0x09 }, { 0x7d, 0x40 }, { 0x7d, 0x00 }, };
+const unsigned char OV2640_800x600_JPEG[][2] = { { 0xFF, 0x01 }, { 0x11, 0x01 },
+		{ 0x12, 0x00 }, { 0x17, 0x11 }, { 0x18, 0x75 }, { 0x32, 0x36 }, { 0x19,
+				0x01 }, { 0x1a, 0x97 }, { 0x03, 0x0f }, { 0x37, 0x40 }, { 0x4f,
+				0xbb }, { 0x50, 0x9c }, { 0x5a, 0x57 }, { 0x6d, 0x80 }, { 0x3d,
+				0x34 }, { 0x39, 0x02 }, { 0x35, 0x88 }, { 0x22, 0x0a }, { 0x37,
+				0x40 }, { 0x34, 0xa0 }, { 0x06, 0x02 }, { 0x0d, 0xb7 }, { 0x0e,
+				0x01 }, { 0xFF, 0x00 }, { 0xe0, 0x04 }, { 0xc0, 0xc8 }, { 0xc1,
+				0x96 }, { 0x86, 0x35 }, { 0x50, 0x89 }, { 0x51, 0x90 }, { 0x52,
+				0x2c }, { 0x53, 0x00 }, { 0x54, 0x00 }, { 0x55, 0x88 }, { 0x57,
+				0x00 }, { 0x5a, 0xc8 }, { 0x5b, 0x96 }, { 0x5c, 0x00 }, { 0xd3,
+				0x02 }, { 0xe0, 0x00 }, { 0xff, 0xff } };
 
-void ov2640_init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi) {
+const unsigned char OV2640_1024x768_JPEG[][2] = { { 0xFF, 0x01 },
+		{ 0x11, 0x01 }, { 0x12, 0x00 }, { 0x17, 0x11 }, { 0x18, 0x75 }, { 0x32,
+				0x36 }, { 0x19, 0x01 }, { 0x1a, 0x97 }, { 0x03, 0x0f }, { 0x37,
+				0x40 }, { 0x4f, 0xbb }, { 0x50, 0x9c }, { 0x5a, 0x57 }, { 0x6d,
+				0x80 }, { 0x3d, 0x34 }, { 0x39, 0x02 }, { 0x35, 0x88 }, { 0x22,
+				0x0a }, { 0x37, 0x40 }, { 0x34, 0xa0 }, { 0x06, 0x02 }, { 0x0d,
+				0xb7 }, { 0x0e, 0x01 }, { 0xFF, 0x00 }, { 0xc0, 0xC8 }, { 0xc1,
+				0x96 }, { 0x8c, 0x00 }, { 0x86, 0x3D }, { 0x50, 0x00 }, { 0x51,
+				0x90 }, { 0x52, 0x2C }, { 0x53, 0x00 }, { 0x54, 0x00 }, { 0x55,
+				0x88 }, { 0x5a, 0x00 }, { 0x5b, 0xC0 }, { 0x5c, 0x01 }, { 0xd3,
+				0x02 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_1280x960_JPEG[][2] = { { 0xFF, 0x01 },
+		{ 0x11, 0x01 }, { 0x12, 0x00 }, { 0x17, 0x11 }, { 0x18, 0x75 }, { 0x32,
+				0x36 }, { 0x19, 0x01 }, { 0x1a, 0x97 }, { 0x03, 0x0f }, { 0x37,
+				0x40 }, { 0x4f, 0xbb }, { 0x50, 0x9c }, { 0x5a, 0x57 }, { 0x6d,
+				0x80 }, { 0x3d, 0x34 }, { 0x39, 0x02 }, { 0x35, 0x88 }, { 0x22,
+				0x0a }, { 0x37, 0x40 }, { 0x34, 0xa0 }, { 0x06, 0x02 }, { 0x0d,
+				0xb7 }, { 0x0e, 0x01 }, { 0xFF, 0x00 }, { 0xe0, 0x04 }, { 0xc0,
+				0xc8 }, { 0xc1, 0x96 }, { 0x86, 0x3d }, { 0x50, 0x00 }, { 0x51,
+				0x90 }, { 0x52, 0x2c }, { 0x53, 0x00 }, { 0x54, 0x00 }, { 0x55,
+				0x88 }, { 0x57, 0x00 }, { 0x5a, 0x40 }, { 0x5b, 0xf0 }, { 0x5c,
+				0x01 }, { 0xd3, 0x02 }, { 0xe0, 0x00 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_CONTRAST2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
+		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x28 }, { 0x7d,
+		0x0c }, { 0x7d, 0x06 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_CONTRAST1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
+		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x24 }, { 0x7d,
+		0x16 }, { 0x7d, 0x06 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_CONTRAST0[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
+		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x20 }, { 0x7d,
+		0x20 }, { 0x7d, 0x06 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_CONTRAST_1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
+		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x1c }, { 0x7d,
+		0x2a }, { 0x7d, 0x06 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_CONTRAST_2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 }, {
+		0x7d, 0x04 }, { 0x7c, 0x07 }, { 0x7d, 0x20 }, { 0x7d, 0x18 }, { 0x7d,
+		0x34 }, { 0x7d, 0x06 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SATURATION2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x02 }, { 0x7c, 0x03 }, { 0x7d, 0x68 }, { 0x7d, 0x68 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_SATURATION1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x02 }, { 0x7c, 0x03 }, { 0x7d, 0x58 }, { 0x7d, 0x68 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_SATURATION0[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x02 }, { 0x7c, 0x03 }, { 0x7d, 0x48 }, { 0x7d, 0x48 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_SATURATION_1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x02 }, { 0x7c, 0x03 }, { 0x7d, 0x38 }, { 0x7d, 0x38 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_SATURATION_2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x02 }, { 0x7c, 0x03 }, { 0x7d, 0x28 }, { 0x7d, 0x28 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_BRIGHTNESS2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x04 }, { 0x7c, 0x09 }, { 0x7d, 0x40 }, { 0x7d, 0x00 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_BRIGHTNESS1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x04 }, { 0x7c, 0x09 }, { 0x7d, 0x30 }, { 0x7d, 0x00 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_BRIGHTNESS0[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x04 }, { 0x7c, 0x09 }, { 0x7d, 0x20 }, { 0x7d, 0x00 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_BRIGHTNESS_1[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x04 }, { 0x7c, 0x09 }, { 0x7d, 0x10 }, { 0x7d, 0x00 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_BRIGHTNESS_2[][2] = { { 0xff, 0x00 }, { 0x7c, 0x00 },
+		{ 0x7d, 0x04 }, { 0x7c, 0x09 }, { 0x7d, 0x00 }, { 0x7d, 0x00 }, { 0xff,
+				0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_NORMAL[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x00 }, { 0x7c, 0x05 }, { 0x7d, 0x80 }, { 0x7d,
+		0x80 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_ANTIQUE[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x18 }, { 0x7c, 0x05 }, { 0x7d, 0x40 }, { 0x7d,
+		0xa6 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_BLACK_NEGATIVE[][2] = {
+		{ 0xff, 0x00 }, { 0x7c, 0x00 }, { 0x7d, 0x58 }, { 0x7c, 0x05 }, { 0x7d,
+				0x80 }, { 0x7d, 0x80 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_BLUISH[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x18 }, { 0x7c, 0x05 }, { 0x7d, 0xa0 }, { 0x7d,
+		0x40 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_BLACK[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x18 }, { 0x7c, 0x05 }, { 0x7d, 0x80 }, { 0x7d,
+		0x80 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_NEGATIVE[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x40 }, { 0x7c, 0x05 }, { 0x7d, 0x80 }, { 0x7d,
+		0x80 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_GREENISH[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x18 }, { 0x7c, 0x05 }, { 0x7d, 0x40 }, { 0x7d,
+		0x40 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_SPECIAL_EFFECTS_REDDISH[][2] = { { 0xff, 0x00 }, {
+		0x7c, 0x00 }, { 0x7d, 0x18 }, { 0x7c, 0x05 }, { 0x7d, 0x40 }, { 0x7d,
+		0xc0 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_LIGHT_MODE_AUTO[][2] = { { 0xff, 0x00 },
+		{ 0xc7, 0x00 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_LIGHT_MODE_SUNNY[][2] = { { 0xff, 0x00 }, { 0xc7,
+		0x40 }, { 0xcc, 0x5e }, { 0xcd, 0x41 }, { 0xce, 0x54 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_LIGHT_MODE_CLOUDY[][2] = { { 0xff, 0x00 }, { 0xc7,
+		0x40 }, { 0xcc, 0x65 }, { 0xcd, 0x41 }, { 0xce, 0x4f }, { 0xff, 0xff } };
+
+const unsigned char OV2640_LIGHT_MODE_OFFICE[][2] = { { 0xff, 0x00 }, { 0xc7,
+		0x40 }, { 0xcc, 0x52 }, { 0xcd, 0x41 }, { 0xce, 0x66 }, { 0xff, 0xff } };
+
+const unsigned char OV2640_LIGHT_MODE_HOME[][2] = { { 0xff, 0x00 },
+		{ 0xc7, 0x40 }, { 0xcc, 0x42 }, { 0xcd, 0x3f }, { 0xce, 0x71 }, { 0xff,
+				0xff } };
+
+/**
+ * Camera initialization.
+ * @param p_hi2c Pointer to I2C interface.
+ * @param p_hdcmi Pointer to DCMI interface.
+ */
+void OV2640_Init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi) {
 	phi2c = p_hi2c;
 	phdcmi = p_hdcmi;
 
@@ -137,57 +290,102 @@ void ov2640_init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi) {
 	HAL_Delay(100);
 
 	// Software reset: reset all registers to default values
-	sccb_write(0xff, 0x01);
-	sccb_write(0x12, 0x80);
+	SCCB_Write(0xff, 0x01);
+	SCCB_Write(0x12, 0x80);
 	HAL_Delay(100);
 
 #ifdef DEBUG
 	uint8_t pid; uint8_t ver;
-	sccb_read(0x0a, &pid);  // pid is 0x76
-	sccb_read(0x0b, &ver);  // ver is 0x73
+	SCCB_Read(0x0a, &pid);  // pid value is 0x26
+	SCCB_Read(0x0b, &ver);  // ver value is 0x42
 	my_printf("PID: 0x%x, VER: 0x%x\n", pid, ver);
-
 #endif
-	// Stop capturing
-	ov2640_stop_dcmi();
+
+	// Stop DCMI clear buffer
+	OV2640_StopDCMI();
 }
 
-
-void ov2640_conf(short opt) {
-#ifdef DEBUG
-	my_printf("Starting configuration \n");
-#endif
-	load_config(OV2640_JPEG_INIT);
-	load_config(OV2640_YUV422);
-	load_config(OV2640_JPEG);
-	HAL_Delay(10);
-	sccb_write(0xff, 0x01);
-	HAL_Delay(10);
-	sccb_write(0x15, 0x00);
-
-	switch( opt )
-	{
-	case 0:
-		load_config(OV2640_160x120_JPEG);
-	    break;
-	case 1:
-		load_config(OV2640_320x240_JPEG);
-	    break;
-	case 2:
-		load_config(OV2640_640x480_JPEG);
-	    break;
+/**
+ * Camera resolution selection.
+ * @param opt Resolution option.
+ */
+void OV2640_ResolutionOptions(uint16_t opt) {
+	switch (opt) {
+	case 15533:
+		OV2640_ResolutionConfiguration(0);
+		break;
+	case 15534:
+		OV2640_ResolutionConfiguration(1);
+		break;
+	case 15535:
+		OV2640_ResolutionConfiguration(2);
+		break;
+	case 25535:
+		OV2640_ResolutionConfiguration(3);
+		break;
+	case 45535:
+		OV2640_ResolutionConfiguration(4);
+		break;
+	case 65535:
+		OV2640_ResolutionConfiguration(5);
+		break;
 	default:
-		load_config(OV2640_320x240_JPEG);
-	    break;
+		OV2640_ResolutionConfiguration(1);
+		break;
 	}
 
+}
+
+/**
+ * Camera resolution selection.
+ * @param opt Resolution option.
+ */
+void OV2640_ResolutionConfiguration(short opt) {
+#ifdef DEBUG
+	my_printf("Starting resolution choice \r\n");
+#endif
+	OV2640_Configuration(OV2640_JPEG_INIT);
+	OV2640_Configuration(OV2640_YUV422);
+	OV2640_Configuration(OV2640_JPEG);
+	HAL_Delay(10);
+	SCCB_Write(0xff, 0x01);
+	HAL_Delay(10);
+	SCCB_Write(0x15, 0x00);
+
+	switch (opt) {
+	case 0:
+		OV2640_Configuration(OV2640_160x120_JPEG);
+		break;
+	case 1:
+		OV2640_Configuration(OV2640_320x240_JPEG);
+		break;
+	case 2:
+		OV2640_Configuration(OV2640_640x480_JPEG);
+		break;
+	case 3:
+		OV2640_Configuration(OV2640_800x600_JPEG);
+		break;
+	case 4:
+		OV2640_Configuration(OV2640_1024x768_JPEG);
+		break;
+	case 5:
+		OV2640_Configuration(OV2640_1280x960_JPEG);
+		break;
+	default:
+		OV2640_Configuration(OV2640_320x240_JPEG);
+		break;
+	}
 
 #ifdef DEBUG
-	my_printf("Finalize configuration \n");
+	my_printf("Finalize configuration \r\n");
 #endif
 }
 
-void load_config(const unsigned char arr[][2]) {
+/**
+ * Configure camera registers.
+ * @param arr Array with addresses and values using to overwrite camera registers.
+ */
+void OV2640_Configuration(const unsigned char arr[][2]) {
 	unsigned short i = 0;
 	uint8_t reg_addr, data, data_read;
 	while (1) {
@@ -196,58 +394,228 @@ void load_config(const unsigned char arr[][2]) {
 		if (reg_addr == 0xff && data == 0xff) {
 			break;
 		}
-		sccb_read(reg_addr, &data_read);
-		sccb_write(reg_addr, data);
+		SCCB_Read(reg_addr, &data_read);
+		SCCB_Write(reg_addr, data);
 #ifdef DEBUG
-		my_printf("sccb write: 0x%x 0x%x=>0x%x\n", reg_addr, data_read, data);
+		my_printf("SCCB write: 0x%x 0x%x=>0x%x\r\n", reg_addr, data_read, data);
 #endif
 		HAL_Delay(10);
-		sccb_read(reg_addr, &data_read);
+		SCCB_Read(reg_addr, &data_read);
 		if (data != data_read) {
 #ifdef DEBUG
-			my_printf("sccb write failure: 0x%x 0x%x\n", reg_addr, data_read);
+			my_printf("SCCB write failure: 0x%x 0x%x\r\n", reg_addr, data_read);
 #endif
 		}
 		i++;
 	}
 }
 
- int sccb_write(uint8_t reg_addr, uint8_t data) {
-	uint8_t buf[2] = { 0 };
-	HAL_StatusTypeDef status;
-	buf[0] = reg_addr;
-	buf[1] = data;
-	status = HAL_I2C_Master_Transmit(phi2c, (uint16_t) 0x60, buf, 2, 100);
-	if (status == HAL_OK) {
-		return 1;
-	} else {
-		return 0;
+/**
+ *  Changing the special effect applied to a photo.
+ * @param specialEffect Name or value of the special effect.
+ */
+void OV2640_SpecialEffect(short specialEffect) {
+#ifdef DEBUG
+		my_printf("Special effect value:%d\r\n", se);
+#endif
+	if (specialEffect == 0) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_ANTIQUE);
+	} else if (specialEffect == 1) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_BLUISH);
+	} else if (specialEffect == 2) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_GREENISH);
+	} else if (specialEffect == 3) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_REDDISH);
+	} else if (specialEffect == 4) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_BLACK);
+	} else if (specialEffect == 5) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_NEGATIVE);
+	} else if (specialEffect == 6) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_BLACK_NEGATIVE);
+	} else if (specialEffect == 7) {
+		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_NORMAL);
 	}
 }
 
- int sccb_read(uint8_t reg_addr, uint8_t *pdata) {
-	uint8_t buf[1] = { 0 };
-	HAL_StatusTypeDef status;
-	buf[0] = reg_addr;
-	status = HAL_I2C_Master_Transmit(phi2c, (uint16_t) 0x60, buf, 1, 100);
-	if (status == HAL_OK) {
-		status = HAL_I2C_Master_Receive(phi2c, (uint16_t) 0x60, pdata, 1, 100);
-		if (status == HAL_OK) {
-			return 1;
+/**
+ * Activation of simple white balance.
+ */
+void OV2640_AdvancedWhiteBalance() {
+#ifdef DEBUG
+		my_printf("Enable simple white balance mode\r\n");
+#endif
+	SCCB_Write(0xff, 0x00);
+	HAL_Delay(1);
+	SCCB_Write(0xc7, 0x00);
+}
+
+/**
+ * Activation of simple white balance.
+ */
+void OV2640_SimpleWhiteBalance() {
+#ifdef DEBUG
+		my_printf("Enable simple white balance mode\r\n");
+#endif
+	SCCB_Write(0xff, 0x00);
+	HAL_Delay(1);
+	SCCB_Write(0xc7, 0x10);
+}
+
+/**
+ * Changing image brightness.
+ * @param brightness Name or value of the brightness.
+ */
+void OV2640_Brightness(short brightness) {
+#ifdef DEBUG
+		my_printf("Brightness value:%d\r\n", se);
+#endif
+
+	if (brightness == 0) {
+		OV2640_Configuration(OV2640_BRIGHTNESS0);
+	} else if (brightness == 1) {
+		OV2640_Configuration(OV2640_BRIGHTNESS1);
+	} else if (brightness == 2) {
+		OV2640_Configuration(OV2640_BRIGHTNESS2);
+	} else if (brightness == 3) {
+		OV2640_Configuration(OV2640_BRIGHTNESS_1);
+	} else if (brightness == 4) {
+		OV2640_Configuration(OV2640_BRIGHTNESS_2);
+	}
+}
+
+/**
+ * Changing image light mode.
+ * @param lightMode Name or value of the light mode.
+ */
+void OV2640_LightMode(short lightMode) {
+#ifdef DEBUG
+		my_printf("Light mode value:%d\r\n", se);
+#endif
+
+	if (lightMode == 0) {
+		OV2640_AdvancedWhiteBalance();
+	} else if (lightMode == 1) {
+		OV2640_Configuration(OV2640_LIGHT_MODE_SUNNY);
+	} else if (lightMode == 2) {
+		OV2640_Configuration(OV2640_LIGHT_MODE_CLOUDY);
+	} else if (lightMode == 3) {
+		OV2640_Configuration(OV2640_LIGHT_MODE_OFFICE);
+	} else if (lightMode == 4) {
+		OV2640_Configuration(OV2640_LIGHT_MODE_HOME);
+	}
+}
+/**
+ *  Changing image saturation.
+ * @param saturation  Name or value of the saturation.
+ */
+void OV2640_Saturation(short saturation) {
+#ifdef DEBUG
+		my_printf("Saturation value:%d\r\n", se);
+#endif
+
+	if (saturation == 0) {
+		OV2640_Configuration(OV2640_SATURATION0);
+	} else if (saturation == 1) {
+		OV2640_Configuration(OV2640_SATURATION1);
+	} else if (saturation == 2) {
+		OV2640_Configuration(OV2640_SATURATION2);
+	} else if (saturation == 3) {
+		OV2640_Configuration(OV2640_SATURATION_1);
+	} else if (saturation == 4) {
+		OV2640_Configuration(OV2640_SATURATION_2);
+	}
+}
+
+/**
+ * Changing image contrast.
+ * @param contrast Name or value of the contrast.
+ */
+void OV2640_Contrast(short contrast) {
+#ifdef DEBUG
+		my_printf("Contrast value:%d\r\n", se);
+#endif
+
+	if (contrast == 0) {
+		OV2640_Configuration(OV2640_CONTRAST0);
+	} else if (contrast == 1) {
+		OV2640_Configuration(OV2640_CONTRAST1);
+	} else if (contrast == 2) {
+		OV2640_Configuration(OV2640_CONTRAST2);
+	} else if (contrast == 3) {
+		OV2640_Configuration(OV2640_CONTRAST_1);
+	} else if (contrast == 4) {
+		OV2640_Configuration(OV2640_CONTRAST_2);
+	}
+}
+
+/**
+ * Stop DCMI (Clear  memory buffer)
+ */
+void OV2640_StopDCMI(void) {
+#ifdef DEBUG
+		my_printf("DCMI has been stopped \r\n");
+#endif
+	HAL_DCMI_Stop(phdcmi);
+	HAL_Delay(10); // If you get a DCMI error (data is not received), increase value to 30.
+}
+
+/**
+ * Executes a single reading from DCMI and returns  data as an image.
+ * @param frameBuffer Table with data.
+ * @param length Length of capture to be transferred.
+ */
+void OV2640_CaptureSnapshot(uint32_t frameBuffer, int length) {
+	OV2640_StopDCMI();
+	HAL_DCMI_Start_DMA(phdcmi, DCMI_MODE_SNAPSHOT, frameBuffer, length);
+}
+
+/**
+ * Write value to camera register.
+ * @param reg_addr Address of register.
+ * @param data New value.
+ * @return  Operation status.
+ */
+short SCCB_Write(uint8_t reg_addr, uint8_t data) {
+	short opertionStatus = 0;
+	uint8_t buffer[2] = { 0 };
+	HAL_StatusTypeDef connectionStatus;
+	buffer[0] = reg_addr;
+	buffer[1] = data;
+	__disable_irq();
+	connectionStatus = HAL_I2C_Master_Transmit(phi2c, (uint16_t) 0x60, buffer,
+			2, 100);
+	if (connectionStatus == HAL_OK) {
+		opertionStatus = 1;
+	} else {
+		opertionStatus = 0;
+	}
+	__enable_irq();
+	return opertionStatus;
+}
+
+/**
+ * Reading data from camera registers.
+ * @param reg_addr Address of register.
+ * @param pdata Value read from register.
+ * @return Operation status.
+ */
+short SCCB_Read(uint8_t reg_addr, uint8_t *pdata) {
+	short opertionStatus = 0;
+	HAL_StatusTypeDef connectionStatus;
+	__disable_irq();
+	connectionStatus = HAL_I2C_Master_Transmit(phi2c, (uint16_t) 0x60,
+			&reg_addr, 1, 100);
+	if (connectionStatus == HAL_OK) {
+		connectionStatus = HAL_I2C_Master_Receive(phi2c, (uint16_t) 0x61, pdata,
+				1, 100);
+		if (connectionStatus == HAL_OK) {
+			opertionStatus = 0;
 		} else {
-			return 0;
+			opertionStatus = 1;
 		}
 	} else {
-		return 1;
+		opertionStatus = 2;
 	}
-}
-
-void ov2640_stop_dcmi(void) {
-	HAL_DCMI_Stop(phdcmi);
-	HAL_Delay(30);
-}
-
-void ov2640_capture_snapshot(uint32_t buf_addr, int len) {
-	ov2640_stop_dcmi();
-	HAL_DCMI_Start_DMA(phdcmi, DCMI_MODE_SNAPSHOT, buf_addr, len);
+	__enable_irq();
+	return opertionStatus;
 }
