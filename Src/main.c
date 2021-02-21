@@ -54,7 +54,6 @@
  * Code debugging option
  */
 //#define DEBUG
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -80,10 +79,10 @@ DMA_HandleTypeDef hdma_usart3_tx;
 
 //#define RES160X120
 //#define RES320X240
-#define RES640X480
+//#define RES640X480
 //#define RES800x600
 //#define RES1024x768
-//#define RES1280x960
+#define RES1280x960
 
 #ifdef RES160X120
 enum imageResolution imgRes=RES_160X120;
@@ -115,8 +114,9 @@ enum imageResolution imgRes = RES_1280x960;
 uint8_t frameBuffer[RES_1280x960] = { 0 };
 #endif
 
-short mutex = 0;
-
+ushort mutex = 0;
+uint16_t bufferPointer = 0;
+ushort headerFound = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -202,23 +202,50 @@ int main(void) {
 #ifdef DEBUG
 	my_printf("Finishing configuration \r\n");
 #endif
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 
 	/**
-	 * Pressing button (B1) on the nucleo board will take a picture and return a JPEG via the serial port.
+	 * Pressing button (B1) on the Nucleo board will take a picture and return JPEG via the serial port.
 	 */
 	while (1) {
 		if (HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin)) {
 			if (mutex == 1) {
 				memset(frameBuffer, 0, sizeof frameBuffer);
 				OV2640_CaptureSnapshot((uint32_t) frameBuffer, imgRes);
-				HAL_Delay(2000);
 
-				//HAL_UART_Transmit(&huart3, framebuf,imgRes, 3000);
-				HAL_UART_Transmit_DMA(&huart3, frameBuffer, imgRes); //Use of DMA may be necessary for larger data streams.
+				while (1) {
+					if (headerFound == 0 && frameBuffer[bufferPointer] == 0xFF
+							&& frameBuffer[bufferPointer + 1] == 0xD8) {
+						headerFound = 1;
+					#ifdef DEBUG
+						my_printf("Found header of JPEG file \r\n");
+					#endif
+					}
+					if (headerFound == 1 && frameBuffer[bufferPointer] == 0xFF
+							&& frameBuffer[bufferPointer + 1] == 0xD9) {
+						bufferPointer = bufferPointer + 2;
+					#ifdef DEBUG
+						my_printf("Found EOF of JPEG file \r\n");
+						#endif
+						headerFound = 0;
+						break;
+					}
+
+					if (bufferPointer >= 65535) {
+						break;
+					}
+					bufferPointer++;
+				}
+					#ifdef DEBUG
+						my_printf("Image size: %d bytes \r\n",bufferPointer);
+					#endif
+
+				HAL_UART_Transmit_DMA(&huart3, frameBuffer, bufferPointer); //Use of DMA may be necessary for larger data streams.
+				bufferPointer = 0;
 				mutex = 0;
 			}
 		} else {
