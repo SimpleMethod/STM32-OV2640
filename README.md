@@ -196,4 +196,4 @@ You need to make sure that:
 2. All wires are properly connected, 
 3. Have a high enough clock speed for the MCU,
 
-**Use 320x240px resolution for testing - it always works** 
+**Use 320x240px resolution for testing - it always works :-)** 
