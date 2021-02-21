@@ -1,4 +1,4 @@
 Src/* linguist-generated=true
 Inc/* linguist-generated=true
-*.c linguist-language=C
-*.h linguist-language=C
+*.c linguist-language=csharp
+*.h linguist-language=csharp
