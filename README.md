@@ -6,9 +6,6 @@
 ## Support for resolutions  such as:
  -  160X120px,
 -   320X240px,
-  
-Experimental use:
-
 -   640X480px,
 -  800x600px,
 -  1024x768px,
@@ -190,8 +187,6 @@ Code optimization, now requires **10 times less space in buffer** than before!
 ![enter image description here](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/FullRes.jpg)
 ![enter image description here](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/MinRes.jpg)
 
-#  🐛 Known Bugs
-When a resolution of 1280x960px is used, the DCMI will not always be initialized correctly. It already begins work with the status HAL_DCMI_STATE_BUSY  - Need to investigate the problem more deeply.
 
 # 💀 My code doesn't work, nothing happens, what to do?
 
