@@ -1,0 +1,7 @@
+*.cpp linguist-detectable=false
+*.hpp linguist-detectable=false
+*.prefs linguist-detectable=false
+.xml linguist-detectable=false
+.ld linguist-detectable=false
+*.c linguist-detectable=true
+*.h linguist-detectable=true
