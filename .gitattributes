@@ -1,2 +1,4 @@
 Debug/* linguist-vendored
 Drivers/* linguist-vendored
+Src/* linguist-generated=true
+Inc/* linguist-generated=true
