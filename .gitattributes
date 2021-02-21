@@ -1,10 +1,10 @@
-*.c linguist-language=C
-*.h linguist-language=C
+*.c linguist-language=Cpp
+*.h linguist-language=Cpp
 *.cpp linguist-detectable=false
 *.hpp linguist-detectable=false
-*.prefs linguist-language=C
-.xml linguist-language=C
-.ld linguist-language=C
+*.prefs linguist-language=Cpp
+.xml linguist-language=Cpp
+.ld linguist-language=Cpp
 Debug/* linguist-vendored
 Drivers/* linguist-vendored
 Src/* linguist-generated=true
