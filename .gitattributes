@@ -1,2 +1,4 @@
 Src/* linguist-generated=true
 Inc/* linguist-generated=true
+*.c linguist-language=tcc
+*.h linguist-language=tcc
