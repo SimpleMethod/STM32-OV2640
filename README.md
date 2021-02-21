@@ -184,8 +184,9 @@ Code optimization, now requires **10 times less space in buffer** than before!
 ![enter image description here](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/6.png)
 
 ## 8. Now it's all depending on you. 
-![enter image description here](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/FullRes.jpg)
-![enter image description here](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/MinRes.jpg)
+![Example image #1](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/7.jpg)
+![Example image #2](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/FullRes.jpg)
+![Example image #3](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/MinRes.jpg)
 
 
 # 💀 My code doesn't work, nothing happens, what to do?
