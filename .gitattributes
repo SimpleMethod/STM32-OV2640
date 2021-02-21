@@ -1,7 +1,11 @@
+*.c linguist-language=C
+*.h linguist-language=C
 *.cpp linguist-detectable=false
 *.hpp linguist-detectable=false
-*.prefs linguist-detectable=false
-.xml linguist-detectable=false
-.ld linguist-detectable=false
-*.c linguist-detectable=true
-*.h linguist-detectable=true
+*.prefs linguist-language=C
+.xml linguist-language=C
+.ld linguist-language=C
+Debug/* linguist-vendored
+Drivers/* linguist-vendored
+Src/* linguist-generated=true
+Inc/* linguist-generated=true
