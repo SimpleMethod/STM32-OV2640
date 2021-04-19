@@ -2,11 +2,9 @@
 ![POC](https://raw.githubusercontent.com/SimpleMethod/STM32-OV2640/master/readme/6.png)
 
 
-#### Support for libjpeg library using for JPEG image decompression and compression with greyscale or RGB color type. 
-#### Branch with example: https://github.com/SimpleMethod/STM32-OV2640/tree/Imageoptimization
+
 
 # 🚀 Features
-
 ## Support for resolutions:
  -  160X120px,
 -   320X240px,
@@ -21,6 +19,9 @@
 - contrast, 
 - light mode, 
 - special effect such as: antique, bluish, greenish, reddish, black & white style, negative, Negative with black & white style and normal view.
+
+
+## Support for libjpeg library. Branch with example: https://github.com/SimpleMethod/STM32-OV2640/tree/Imageoptimization
 
 Code optimization, now requires **10 times less space in buffer** than before!
 
