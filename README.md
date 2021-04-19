@@ -3,7 +3,11 @@
 
 
 # 🚀 Improvements
-## Support for resolutions  such as:
+
+## Support for libjpeg library using for JPEG image decompression and compression with greyscale or RGB color type. 
+### Branch with example: https://github.com/SimpleMethod/STM32-OV2640/tree/Imageoptimization
+
+## Support for resolutions:
  -  160X120px,
 -   320X240px,
 -   640X480px,
@@ -11,7 +15,7 @@
 -  1024x768px,
 -  1280x960px,
 
-## Added support for extra special effects such as: 
+## Added support for extra special effects: 
 - brightness, 
 - saturation, 
 - contrast, 
