@@ -1,0 +1,11 @@
+jdcolor.c:91:1:build_ycc_rgb_table	32	static
+jdcolor.c:141:1:ycc_rgb_convert	80	static
+jdcolor.c:189:1:build_rgb_y_table	32	static
+jdcolor.c:213:1:rgb_gray_convert	64	static
+jdcolor.c:250:1:rgb_convert	40	static
+jdcolor.c:282:1:null_convert	40	static
+jdcolor.c:314:1:grayscale_convert	32	static
+jdcolor.c:330:1:gray_rgb_convert	40	static
+jdcolor.c:358:1:ycck_cmyk_convert	88	static
+jdcolor.c:406:1:start_pass_dcolor	16	static
+jdcolor.c:417:1:jinit_color_deconverter	24	static

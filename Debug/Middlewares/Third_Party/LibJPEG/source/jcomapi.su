@@ -1,0 +1,4 @@
+jcomapi.c:29:1:jpeg_abort	24	static
+jcomapi.c:69:1:jpeg_destroy	16	static
+jcomapi.c:86:1:jpeg_alloc_quant_table	24	static
+jcomapi.c:98:1:jpeg_alloc_huff_table	24	static

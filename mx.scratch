@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ScratchFile FileVersion="3.0">
   <FileVersion>3.0</FileVersion>
   <Workspace>
     <WorkspaceType>Single-project</WorkspaceType>
-    <WorkspacePath>E:\STM32-F7-ov2640-master\</WorkspacePath>
+    <WorkspacePath>D:\Github\stm32-ov2640-libjpeg\</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>C:\Users\Pathfinder\STM32Cube\Repository\STM32Cube_FW_F7_V1.16.0</HAL_Driver>
+    <HAL_Driver>C:\Users\Pathfinder\STM32Cube\Repository\STM32Cube_FW_F7_V1.16.1\</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>Test_DCMI.ioc</IocFile>
     <Project>
       <ProjectName>Test_DCMI</ProjectName>
       <ProjectNature>C</ProjectNature>
-      <Secure/>
-      <filestoremove/>
+      <Secure />
+      <filestoremove />
       <sourceEntriesToRemove>
-        <sourceEntry/>
+        <sourceEntry />
       </sourceEntriesToRemove>
       <configs>
         <config>
@@ -27,48 +27,50 @@
           <cpucore>Arm Cortex-M7</cpucore>
           <fpu>DP</fpu>
           <memories>
-            <memory access="xrw" name="RAM" size="512" start="0x20000000"/>
-            <memory access="rx" name="FLASH" size="2048" start="0x8000000"/>
+            <memory access="xrw" name="RAM" size="512" start="0x20000000" />
+            <memory access="rx" name="FLASH" size="2048" start="0x8000000" />
           </memories>
-          <startup>C:\Users\Pathfinder\STM32Cube\Repository\STM32Cube_FW_F7_V1.16.0\Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\gcc\startup_stm32f767xx.s</startup>
+          <startup>C:\Users\Pathfinder\STM32Cube\Repository\STM32Cube_FW_F7_V1.16.1\Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\gcc\startup_stm32f767xx.s</startup>
           <LinkSettings>
-            <LinkAdditionalLibs/>
+            <icfloc>1</icfloc>
+            <LinkAdditionalLibs />
           </LinkSettings>
           <heapSize>0x200</heapSize>
           <stackSize>0x400</stackSize>
           <board>NUCLEO-F767ZI</board>
           <debugprobe>swd</debugprobe>
-          <optimization/>
+          <optimization />
           <Aincludes>
-            <include/>
+            <include />
           </Aincludes>
-          <Adefines/>
+          <Adefines />
           <Cdefines>
             <define>USE_HAL_DRIVER</define>
             <define>STM32F767xx</define>
           </Cdefines>
-          <Ldefines/>
+          <Ldefines />
           <Cincludes>
             <include>Inc</include>
             <include>Drivers\STM32F7xx_HAL_Driver\Inc</include>
             <include>Drivers\STM32F7xx_HAL_Driver\Inc\Legacy</include>
+            <include>Middlewares\Third_Party\LibJPEG\include</include>
             <include>Drivers\CMSIS\Device\ST\STM32F7xx\Include</include>
             <include>Drivers\CMSIS\Include</include>
           </Cincludes>
           <definestoremove>
-            <Adefines/>
+            <Adefines />
             <Cdefines>
               <define>USE_FULL_LL_DRIVER</define>
               <define>MBEDTLS_CONFIG_FILE="mbedtls_config.h"</define>
               <define>USE_FULL_ASSERT=1U</define>
             </Cdefines>
-            <Ldefines/>
+            <Ldefines />
           </definestoremove>
           <inctoremove>
             <Aincludes>
-              <include/>
+              <include />
             </Aincludes>
-            <Cincludes/>
+            <Cincludes />
           </inctoremove>
         </config>
       </configs>
@@ -80,8 +82,12 @@
         <sourceEntry>
           <name>Drivers</name>
         </sourceEntry>
+        <sourceEntry>
+          <name>Middlewares</name>
+        </sourceEntry>
       </sourceEntries>
-      <Groups/>
+      <Groups />
     </Project>
   </Workspace>
 </ScratchFile>
+

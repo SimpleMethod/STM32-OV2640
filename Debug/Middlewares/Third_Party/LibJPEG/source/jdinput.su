@@ -1,0 +1,9 @@
+jdinput.c:47:1:jpeg_core_output_dimensions	24	static
+jdinput.c:208:1:initial_setup	24	static
+jdinput.c:388:1:per_scan_setup	32	static
+jdinput.c:487:1:latch_quant_tables	32	static
+jdinput.c:521:1:start_input_pass	16	static
+jdinput.c:538:1:finish_input_pass	16	static
+jdinput.c:559:1:consume_markers	24	static
+jdinput.c:619:1:reset_input_controller	24	static
+jdinput.c:641:1:jinit_input_controller	24	static

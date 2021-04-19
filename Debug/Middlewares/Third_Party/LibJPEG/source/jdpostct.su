@@ -1,0 +1,5 @@
+jdpostct.c:73:1:start_pass_dpost	40	static
+jdpostct.c:126:1:post_process_1pass	64	static
+jdpostct.c:158:1:post_process_prepass	64	static
+jdpostct.c:202:1:post_process_2pass	56	static
+jdpostct.c:250:1:jinit_d_post_controller	40	static

@@ -1,0 +1,2 @@
+ov2640_libjpeg.c:44:6:ov2640_decodeJPEG	672	static
+ov2640_libjpeg.c:128:6:ov2640_encodeJPEG	592	static

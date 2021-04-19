@@ -1,0 +1,6 @@
+jdapistd.c:38:1:jpeg_start_decompress	24	static
+jdapistd.c:95:1:output_pass_setup	32	static
+jdapistd.c:152:1:jpeg_read_scanlines	40	static
+jdapistd.c:185:1:jpeg_read_raw_data	32	static
+jdapistd.c:228:1:jpeg_start_output	16	static
+jdapistd.c:253:1:jpeg_finish_output	16	static

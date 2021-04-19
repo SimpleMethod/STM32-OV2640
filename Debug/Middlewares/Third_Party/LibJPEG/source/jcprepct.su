@@ -1,0 +1,6 @@
+jcprepct.c:78:1:start_pass_prep	24	static
+jcprepct.c:106:1:expand_bottom_edge	40	static
+jcprepct.c:128:1:pre_process_data	64	static
+jcprepct.c:197:1:pre_process_context	64	static
+jcprepct.c:269:1:create_context_buffer	56	static
+jcprepct.c:318:1:jinit_c_prep_controller	40	static

@@ -1,0 +1,9 @@
+jcapimin.c:31:1:jpeg_CreateCompress	40	static
+jcapimin.c:96:1:jpeg_destroy_compress	16	static
+jcapimin.c:108:1:jpeg_abort_compress	16	static
+jcapimin.c:127:1:jpeg_suppress_tables	32	static
+jcapimin.c:155:1:jpeg_finish_compress	24	static
+jcapimin.c:200:1:jpeg_write_marker	32	static
+jcapimin.c:222:1:jpeg_write_m_header	24	static
+jcapimin.c:234:1:jpeg_write_m_byte	16	static
+jcapimin.c:262:1:jpeg_write_tables	16	static

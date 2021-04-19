@@ -1,0 +1,9 @@
+jdmainct.c:157:1:alloc_funny_pointers	40	static
+jdmainct.c:195:1:make_funny_pointers	56	static
+jdmainct.c:238:1:set_wraparound_pointers	48	static
+jdmainct.c:266:1:set_bottom_pointers	48	static
+jdmainct.c:307:1:start_pass_main	24	static
+jdmainct.c:345:1:process_data_simple_main	56	static
+jdmainct.c:385:1:process_data_context_main	56	static
+jdmainct.c:459:1:process_data_crank_post	48	static
+jdmainct.c:476:1:jinit_d_main_controller	48	static

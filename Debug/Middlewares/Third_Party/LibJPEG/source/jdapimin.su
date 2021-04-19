@@ -1,0 +1,9 @@
+jdapimin.c:31:1:jpeg_CreateDecompress	40	static
+jdapimin.c:92:1:jpeg_destroy_decompress	16	static
+jdapimin.c:104:1:jpeg_abort_decompress	16	static
+jdapimin.c:115:1:default_decompress_parms	32	static
+jdapimin.c:242:1:jpeg_read_header	24	static
+jdapimin.c:288:1:jpeg_consume_input	24	static
+jdapimin.c:335:1:jpeg_input_complete	16	static
+jdapimin.c:350:1:jpeg_has_multiple_scans	16	static
+jdapimin.c:370:1:jpeg_finish_decompress	16	static

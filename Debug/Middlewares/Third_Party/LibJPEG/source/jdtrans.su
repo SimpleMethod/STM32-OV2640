@@ -1,0 +1,2 @@
+jdtrans.c:46:1:jpeg_read_coefficients	24	static
+jdtrans.c:98:1:transdecode_master_selection	24	static

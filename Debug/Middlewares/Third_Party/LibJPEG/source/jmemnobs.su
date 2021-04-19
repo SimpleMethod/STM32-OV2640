@@ -1,0 +1,8 @@
+jmemnobs.c:29:1:jpeg_get_small	16	static
+jmemnobs.c:35:1:jpeg_free_small	24	static
+jmemnobs.c:49:1:jpeg_get_large	16	static
+jmemnobs.c:55:1:jpeg_free_large	24	static
+jmemnobs.c:67:1:jpeg_mem_available	24	static
+jmemnobs.c:81:1:jpeg_open_backing_store	24	static
+jmemnobs.c:94:1:jpeg_mem_init	16	static
+jmemnobs.c:100:1:jpeg_mem_term	16	static

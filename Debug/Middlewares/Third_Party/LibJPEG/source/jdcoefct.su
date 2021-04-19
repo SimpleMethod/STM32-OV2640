@@ -1,0 +1,10 @@
+jdcoefct.c:80:1:start_iMCU_row	24	static
+jdcoefct.c:108:1:start_input_pass	16	static
+jdcoefct.c:120:1:start_output_pass	24	static
+jdcoefct.c:148:1:decompress_onepass	96	static
+jdcoefct.c:230:1:dummy_consume_data	16	static
+jdcoefct.c:246:1:consume_data	88	static
+jdcoefct.c:317:1:decompress_data	80	static
+jdcoefct.c:407:1:smoothing_ok	56	static
+jdcoefct.c:463:1:decompress_smooth_data	320	static
+jdcoefct.c:678:1:jinit_d_coef_controller	56	static

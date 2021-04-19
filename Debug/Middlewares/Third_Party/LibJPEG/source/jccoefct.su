@@ -1,0 +1,6 @@
+jccoefct.c:73:1:start_iMCU_row	24	static
+jccoefct.c:101:1:start_pass_coef	24	static
+jccoefct.c:144:1:compress_data	96	static
+jccoefct.c:249:1:compress_first_pass	112	static
+jccoefct.c:346:1:compress_output	88	static
+jccoefct.c:410:1:jinit_c_coef_controller	56	static

@@ -1,0 +1,8 @@
+jdmaster.c:45:1:use_merged_upsample	16	static
+jdmaster.c:88:1:jpeg_calc_output_dimensions	32	static
+jdmaster.c:229:1:prepare_range_limit_table	24	static
+jdmaster.c:269:1:master_selection	40	static
+jdmaster.c:412:1:prepare_for_output_pass	24	static
+jdmaster.c:472:1:finish_output_pass	24	static
+jdmaster.c:489:1:jpeg_new_colormap	24	static
+jdmaster.c:517:1:jinit_master_decompress	24	static

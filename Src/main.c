@@ -33,13 +33,16 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "libjpeg.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stdlib.h>
 #include "ov2640.h"
+#include "ov2640_libjpeg.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +57,6 @@
  * Code debugging option
  */
 //#define DEBUG
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -79,8 +81,8 @@ DMA_HandleTypeDef hdma_usart3_tx;
  */
 
 //#define RES160X120
-//#define RES320X240
-#define RES640X480
+#define RES320X240
+//#define RES640X480
 //#define RES800x600
 //#define RES1024x768
 //#define RES1280x960
@@ -91,7 +93,7 @@ uint8_t frameBuffer[RES_160X120] = { 0 };
 #endif
 
 #ifdef RES320X240
-enum imageResolution imgRes=RES_320X240;
+enum imageResolution imgRes = RES_320X240;
 uint8_t frameBuffer[RES_320X240] = { 0 };
 #endif
 
@@ -115,7 +117,19 @@ enum imageResolution imgRes = RES_1280x960;
 uint8_t frameBuffer[RES_1280x960] = { 0 };
 #endif
 
-short mutex = 0;
+ushort mutex = 0;
+uint16_t bufferPointer = 0;
+ushort headerFound = 0;
+uint8_t data_receive;
+
+/**
+ *  Image decoding and encoding section using the libjpeg library.
+ */
+unsigned long imageSize = 0;
+uint8_t *imageBuffer = NULL;
+/**
+ *=================================================================
+ */
 
 /* USER CODE END PV */
 
@@ -180,6 +194,7 @@ int main(void) {
 	MX_USART3_UART_Init();
 	MX_DCMI_Init();
 	MX_I2C1_Init();
+	MX_LIBJPEG_Init();
 	/* USER CODE BEGIN 2 */
 	OV2640_Init(&hi2c1, &hdcmi);
 	HAL_Delay(10);
@@ -197,30 +212,65 @@ int main(void) {
 	//HAL_Delay(10);
 	//OV2640_SpecialEffect(Bluish);
 	//HAL_Delay(10);
-	//OV2640_LightMode(Auto);
-	//HAL_Delay(10);
+	OV2640_LightMode(Office);
+	HAL_Delay(10);
 #ifdef DEBUG
 	my_printf("Finishing configuration \r\n");
 #endif
+
+	HAL_UART_Receive_IT(&huart3, &data_receive, 1);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 
-	/**
-	 * Pressing button (B1) on the nucleo board will take a picture and return a JPEG via the serial port.
-	 */
 	while (1) {
-		if (HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin)) {
-			if (mutex == 1) {
-				memset(frameBuffer, 0, sizeof frameBuffer);
-				OV2640_CaptureSnapshot((uint32_t) frameBuffer, imgRes);
-				HAL_Delay(2000);
 
-				//HAL_UART_Transmit(&huart3, framebuf,imgRes, 3000);
-				HAL_UART_Transmit_DMA(&huart3, frameBuffer, imgRes); //Use of DMA may be necessary for larger data streams.
-				mutex = 0;
+		if (data_receive == 0x63) { // Reading the c ASCII character in UART buffer takes photo capture.
+			memset(frameBuffer, 0, sizeof frameBuffer);
+			OV2640_CaptureSnapshot((uint32_t) frameBuffer, imgRes);
+			while (1) {
+				if (headerFound == 0 && frameBuffer[bufferPointer] == 0xFF
+						&& frameBuffer[bufferPointer + 1] == 0xD8) {
+					headerFound = 1;
+#ifdef NEDEBUG
+						my_printf("Found header of JPEG file \r\n");
+					#endif
+				}
+				if (headerFound == 1 && frameBuffer[bufferPointer] == 0xFF
+						&& frameBuffer[bufferPointer + 1] == 0xD9) {
+					bufferPointer = bufferPointer + 2;
+#ifdef NEDEBUG
+						my_printf("Found EOI of JPEG file \r\n");
+						#endif
+					headerFound = 0;
+					break;
+				}
+				if (bufferPointer >= 65535) {
+					break;
+				}
+				bufferPointer++;
 			}
+#ifdef NEDEBUG
+						my_printf("Image size: %d bytes \r\n",bufferPointer);
+					#endif
+
+			/**
+			 *  Image decoding and encoding section using the libjpeg library.
+			 *
+			 */
+			ov2640_decodeJPEG(frameBuffer, bufferPointer, 1); // Image decoding, grayscale selection.
+			HAL_Delay(300);
+			ov2640_encodeJPEG(&imageBuffer, &imageSize, 16); // Encoding image with quality set to 16%.
+			HAL_UART_Transmit_DMA(&huart3, imageBuffer, imageSize); // Sending buffer to UART data output.
+			HAL_Delay(300);
+			/**
+			 * ========================================================================
+			 */
+			bufferPointer = 0;
+			mutex = 0;
+			data_receive = 0xFF;
 		} else {
 			mutex = 1;
 		}
@@ -483,6 +533,10 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	HAL_UART_Receive_IT(&huart3, &data_receive, 1);
+
+}
 /* USER CODE END 4 */
 
 /**

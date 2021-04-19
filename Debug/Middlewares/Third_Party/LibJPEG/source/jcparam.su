@@ -1,0 +1,14 @@
+jcparam.c:24:1:jpeg_add_quant_table	40	static
+jcparam.c:91:1:jpeg_default_qtables	24	static
+jcparam.c:106:1:jpeg_set_linear_quality	32	static
+jcparam.c:123:1:jpeg_quality_scaling	16	static
+jcparam.c:149:1:jpeg_set_quality	24	static
+jcparam.c:169:1:add_huff_table	32	static
+jcparam.c:199:1:std_huff_tables	16	static
+jcparam.c:285:1:jpeg_set_defaults	24	static
+jcparam.c:381:1:jpeg_default_colorspace	16	static
+jcparam.c:413:1:jpeg_set_colorspace	24	static
+jcparam.c:497:1:fill_a_scan	24	static
+jcparam.c:512:1:fill_scans	32	static
+jcparam.c:531:1:fill_dc_scans	40	static
+jcparam.c:559:1:jpeg_simple_progression	48	static

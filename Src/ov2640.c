@@ -31,7 +31,7 @@
 /**
  * Code debugging option
  */
-//#define DEBUG
+//#define NEDEBUG
 
 I2C_HandleTypeDef *phi2c;
 DCMI_HandleTypeDef *phdcmi;
@@ -294,8 +294,9 @@ void OV2640_Init(I2C_HandleTypeDef *p_hi2c, DCMI_HandleTypeDef *p_hdcmi) {
 	SCCB_Write(0x12, 0x80);
 	HAL_Delay(100);
 
-#ifdef DEBUG
-	uint8_t pid; uint8_t ver;
+#ifdef NEDEBUG
+	uint8_t pid;
+	uint8_t ver;
 	SCCB_Read(0x0a, &pid);  // pid value is 0x26
 	SCCB_Read(0x0b, &ver);  // ver value is 0x42
 	my_printf("PID: 0x%x, VER: 0x%x\n", pid, ver);
@@ -341,7 +342,7 @@ void OV2640_ResolutionOptions(uint16_t opt) {
  * @param opt Resolution option.
  */
 void OV2640_ResolutionConfiguration(short opt) {
-#ifdef DEBUG
+#ifdef NEDEBUG
 	my_printf("Starting resolution choice \r\n");
 #endif
 	OV2640_Configuration(OV2640_JPEG_INIT);
@@ -376,7 +377,7 @@ void OV2640_ResolutionConfiguration(short opt) {
 		break;
 	}
 
-#ifdef DEBUG
+#ifdef NEDEBUG
 	my_printf("Finalize configuration \r\n");
 #endif
 }
@@ -396,13 +397,13 @@ void OV2640_Configuration(const unsigned char arr[][2]) {
 		}
 		SCCB_Read(reg_addr, &data_read);
 		SCCB_Write(reg_addr, data);
-#ifdef DEBUG
+#ifdef NEDEBUG
 		my_printf("SCCB write: 0x%x 0x%x=>0x%x\r\n", reg_addr, data_read, data);
 #endif
 		HAL_Delay(10);
 		SCCB_Read(reg_addr, &data_read);
 		if (data != data_read) {
-#ifdef DEBUG
+#ifdef NDEBUG
 			my_printf("SCCB write failure: 0x%x 0x%x\r\n", reg_addr, data_read);
 #endif
 		}
@@ -415,8 +416,8 @@ void OV2640_Configuration(const unsigned char arr[][2]) {
  * @param specialEffect Name or value of the special effect.
  */
 void OV2640_SpecialEffect(short specialEffect) {
-#ifdef DEBUG
-		my_printf("Special effect value:%d\r\n", se);
+#ifdef NEDEBUG
+	my_printf("Special effect value:%d\r\n", specialEffect);
 #endif
 	if (specialEffect == 0) {
 		OV2640_Configuration(OV2640_SPECIAL_EFFECTS_ANTIQUE);
@@ -441,8 +442,8 @@ void OV2640_SpecialEffect(short specialEffect) {
  * Activation of simple white balance.
  */
 void OV2640_AdvancedWhiteBalance() {
-#ifdef DEBUG
-		my_printf("Enable simple white balance mode\r\n");
+#ifdef NEDEBUG
+	my_printf("Enable simple white balance mode\r\n");
 #endif
 	SCCB_Write(0xff, 0x00);
 	HAL_Delay(1);
@@ -453,8 +454,8 @@ void OV2640_AdvancedWhiteBalance() {
  * Activation of simple white balance.
  */
 void OV2640_SimpleWhiteBalance() {
-#ifdef DEBUG
-		my_printf("Enable simple white balance mode\r\n");
+#ifdef NEDEBUG
+	my_printf("Enable simple white balance mode\r\n");
 #endif
 	SCCB_Write(0xff, 0x00);
 	HAL_Delay(1);
@@ -466,8 +467,8 @@ void OV2640_SimpleWhiteBalance() {
  * @param brightness Name or value of the brightness.
  */
 void OV2640_Brightness(short brightness) {
-#ifdef DEBUG
-		my_printf("Brightness value:%d\r\n", se);
+#ifdef NEDEBUG
+	my_printf("Brightness value:%d\r\n", brightness);
 #endif
 
 	if (brightness == 0) {
@@ -488,8 +489,8 @@ void OV2640_Brightness(short brightness) {
  * @param lightMode Name or value of the light mode.
  */
 void OV2640_LightMode(short lightMode) {
-#ifdef DEBUG
-		my_printf("Light mode value:%d\r\n", se);
+#ifdef NEDEBUG
+	my_printf("Light mode value:%d\r\n", lightMode);
 #endif
 
 	if (lightMode == 0) {
@@ -509,8 +510,8 @@ void OV2640_LightMode(short lightMode) {
  * @param saturation  Name or value of the saturation.
  */
 void OV2640_Saturation(short saturation) {
-#ifdef DEBUG
-		my_printf("Saturation value:%d\r\n", se);
+#ifdef NEDEBUG
+	my_printf("Saturation value:%d\r\n", saturation);
 #endif
 
 	if (saturation == 0) {
@@ -531,8 +532,8 @@ void OV2640_Saturation(short saturation) {
  * @param contrast Name or value of the contrast.
  */
 void OV2640_Contrast(short contrast) {
-#ifdef DEBUG
-		my_printf("Contrast value:%d\r\n", se);
+#ifdef NEDEBUG
+	my_printf("Contrast value:%d\r\n", contrast);
 #endif
 
 	if (contrast == 0) {
@@ -552,8 +553,8 @@ void OV2640_Contrast(short contrast) {
  * Stop DCMI (Clear  memory buffer)
  */
 void OV2640_StopDCMI(void) {
-#ifdef DEBUG
-		my_printf("DCMI has been stopped \r\n");
+#ifdef NEDEBUG
+	my_printf("DCMI has been stopped \r\n");
 #endif
 	HAL_DCMI_Stop(phdcmi);
 	HAL_Delay(10); // If you get a DCMI error (data is not received), increase value to 30.
@@ -565,8 +566,10 @@ void OV2640_StopDCMI(void) {
  * @param length Length of capture to be transferred.
  */
 void OV2640_CaptureSnapshot(uint32_t frameBuffer, int length) {
-	OV2640_StopDCMI();
 	HAL_DCMI_Start_DMA(phdcmi, DCMI_MODE_SNAPSHOT, frameBuffer, length);
+	HAL_Delay(2000);
+	HAL_DCMI_Suspend(phdcmi);
+	HAL_DCMI_Stop(phdcmi);
 }
 
 /**

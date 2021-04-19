@@ -1,0 +1,11 @@
+jcarith.c:116:1:emit_byte	24	static
+jcarith.c:133:1:finish_pass	24	static
+jcarith.c:219:1:arith_encode	48	static
+jcarith.c:319:1:emit_restart	32	static
+jcarith.c:362:1:encode_mcu_DC_first	56	static
+jcarith.c:453:1:encode_mcu_AC_first	56	static
+jcarith.c:555:1:encode_mcu_DC_refine	32	static
+jcarith.c:590:1:encode_mcu_AC_refine	56	static
+jcarith.c:686:1:encode_mcu	72	static
+jcarith.c:834:1:start_pass	32	static
+jcarith.c:917:1:jinit_arith_encoder	24	static

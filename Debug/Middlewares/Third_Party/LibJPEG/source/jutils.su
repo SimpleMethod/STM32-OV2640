@@ -1,0 +1,4 @@
+jutils.c:124:1:jdiv_round_up	16	static
+jutils.c:133:1:jround_up	16	static
+jutils.c:177:1:jcopy_sample_rows	40	static
+jutils.c:211:1:jcopy_block_row	24	static

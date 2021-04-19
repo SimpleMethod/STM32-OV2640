@@ -1,0 +1,8 @@
+jdatadst.c:66:1:init_destination	24	static
+jdatadst.c:81:1:init_mem_destination	16	static
+jdatadst.c:111:1:empty_output_buffer	24	static
+jdatadst.c:127:1:empty_mem_output_buffer	32	static
+jdatadst.c:167:1:term_destination	24	static
+jdatadst.c:181:1:term_mem_destination	24	static
+jdatadst.c:197:1:jpeg_stdio_dest	24	static
+jdatadst.c:233:1:jpeg_mem_dest	32	static

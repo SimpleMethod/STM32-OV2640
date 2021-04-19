@@ -1,0 +1,8 @@
+jdsample.c:70:1:start_pass_upsample	24	static
+jdsample.c:90:1:sep_upsample	56	static
+jdsample.c:158:1:fullsize_upsample	24	static
+jdsample.c:171:1:noop_upsample	24	static
+jdsample.c:190:1:int_upsample	80	static
+jdsample.c:234:1:h2v1_upsample	48	static
+jdsample.c:262:1:h2v2_upsample	64	static
+jdsample.c:294:1:jinit_upsampler	56	static

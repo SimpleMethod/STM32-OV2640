@@ -1,0 +1,4 @@
+jcdctmgr.c:65:1:forward_DCT	312	static
+jcdctmgr.c:128:1:forward_DCT_float	312	static
+jcdctmgr.c:180:1:start_pass_fdctmgr	64	static
+jcdctmgr.c:464:1:jinit_forward_dct	24	static

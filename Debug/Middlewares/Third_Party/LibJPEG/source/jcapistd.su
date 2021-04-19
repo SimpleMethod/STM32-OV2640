@@ -1,0 +1,3 @@
+jcapistd.c:38:1:jpeg_start_compress	16	static
+jcapistd.c:77:1:jpeg_write_scanlines	40	static
+jcapistd.c:120:1:jpeg_write_raw_data	32	static

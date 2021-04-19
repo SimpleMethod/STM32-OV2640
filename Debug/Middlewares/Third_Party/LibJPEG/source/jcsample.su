@@ -1,0 +1,10 @@
+jcsample.c:84:1:start_pass_downsample	16	static
+jcsample.c:96:1:expand_right_edge	40	static
+jcsample.c:123:1:sep_downsample	56	static
+jcsample.c:150:1:int_downsample	88	static
+jcsample.c:199:1:fullsize_downsample	32	static
+jcsample.c:224:1:h2v1_downsample	56	static
+jcsample.c:261:1:h2v2_downsample	56	static
+jcsample.c:305:1:h2v2_smooth_downsample	80	static
+jcsample.c:406:1:fullsize_smooth_downsample	80	static
+jcsample.c:478:1:jinit_downsampler	48	static

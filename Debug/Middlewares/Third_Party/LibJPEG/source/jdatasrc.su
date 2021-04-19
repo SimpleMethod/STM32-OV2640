@@ -1,0 +1,8 @@
+jdatasrc.c:46:1:init_source	24	static
+jdatasrc.c:59:1:init_mem_source	16	static
+jdatasrc.c:99:1:fill_input_buffer	24	static
+jdatasrc.c:125:1:fill_mem_input_buffer	16	static
+jdatasrc.c:159:1:skip_input_data	24	static
+jdatasrc.c:200:1:term_source	16	static
+jdatasrc.c:213:1:jpeg_stdio_src	24	static
+jdatasrc.c:252:1:jpeg_mem_src	32	static

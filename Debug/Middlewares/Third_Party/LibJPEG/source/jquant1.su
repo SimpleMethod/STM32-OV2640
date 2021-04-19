@@ -1,0 +1,17 @@
+jquant1.c:187:1:select_ncolors	48	static
+jquant1.c:246:1:output_value	24	static
+jquant1.c:260:1:largest_input_value	24	static
+jquant1.c:274:1:create_colormap	72	static
+jquant1.c:334:1:create_colorindex	64	static
+jquant1.c:397:1:make_odither_array	40	static
+jquant1.c:433:1:create_odither_tables	40	static
+jquant1.c:460:1:color_quantize	56	static
+jquant1.c:488:1:color_quantize3	64	static
+jquant1.c:516:1:quantize_ord_dither	72	static
+jquant1.c:566:1:quantize3_ord_dither	80	static
+jquant1.c:611:1:quantize_fs_dither	104	static
+jquant1.c:723:1:alloc_fs_workspace	32	static
+jquant1.c:742:1:start_pass_1_quant	32	static
+jquant1.c:799:1:finish_pass_1_quant	16	static
+jquant1.c:811:1:new_color_map_1_quant	16	static
+jquant1.c:822:1:jinit_1pass_quantizer	24	static

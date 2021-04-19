@@ -1,0 +1,2 @@
+jddctmgr.c:90:1:start_pass	64	static
+jddctmgr.c:362:1:jinit_inverse_dct	32	static

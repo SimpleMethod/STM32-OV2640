@@ -1,0 +1,9 @@
+jccolor.c:87:1:rgb_ycc_start	32	static
+jccolor.c:131:1:rgb_ycc_convert	64	static
+jccolor.c:187:1:rgb_gray_convert	56	static
+jccolor.c:226:1:cmyk_ycck_convert	64	static
+jccolor.c:281:1:grayscale_convert	40	static
+jccolor.c:310:1:rgb_convert	40	static
+jccolor.c:343:1:null_convert	40	static
+jccolor.c:375:1:null_method	16	static
+jccolor.c:386:1:jinit_color_converter	24	static

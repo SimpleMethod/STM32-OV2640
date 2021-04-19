@@ -1,0 +1,10 @@
+jdarith.c:65:1:get_byte	24	static
+jdarith.c:106:1:arith_decode	40	static
+jdarith.c:190:1:process_restart	32	static
+jdarith.c:242:1:decode_mcu_DC_first	56	static
+jdarith.c:321:1:decode_mcu_AC_first	56	static
+jdarith.c:398:1:decode_mcu_DC_refine	32	static
+jdarith.c:431:1:decode_mcu_AC_refine	56	static
+jdarith.c:503:1:decode_mcu	64	static
+jdarith.c:635:1:start_pass	48	static
+jdarith.c:745:1:jinit_arith_decoder	32	static

@@ -1,0 +1,7 @@
+jctrans.c:39:1:jpeg_write_coefficients	16	static
+jctrans.c:64:1:jpeg_copy_critical_parameters	48	static
+jctrans.c:163:1:transencode_master_selection	16	static
+jctrans.c:221:1:start_iMCU_row	24	static
+jctrans.c:249:1:start_pass_coef	24	static
+jctrans.c:272:1:compress_output	144	static
+jctrans.c:357:1:transencode_coef_controller	32	static
