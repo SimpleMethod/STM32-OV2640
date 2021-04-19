@@ -22,8 +22,8 @@ Recommended use only grayscale during decode JPEG to greyscale libjpeg allocate 
 
 
 # 📚 Example use
-    	uint16_t bufferPointer = 0;
-    	uint8_t headerFound = 0;
+    uint16_t bufferPointer = 0;
+    uint8_t headerFound = 0;
   	unsigned long imageSize = 0;
   	uint8_t *imageBuffer = NULL;
 	//================================
