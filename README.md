@@ -21,7 +21,7 @@ Recommended use only grayscale during decode JPEG to greyscale libjpeg allocate 
 
 
 
-#📚 Example use
+# 📚 Example use
 
 	memset(frameBuffer, 0, sizeof frameBuffer);
 	OV2640_CaptureSnapshot((uint32_t) frameBuffer, imgRes);
